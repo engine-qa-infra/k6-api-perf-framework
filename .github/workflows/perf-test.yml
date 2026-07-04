@@ -7,7 +7,6 @@ on:
   pull_request:
     branches:
       - main
-  # Enables manual execution of specific test profiles from the GitHub UI
   workflow_dispatch:
     inputs:
       test_type:
@@ -36,11 +35,15 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Execute Selected k6 Performance Profile
-        uses: grafana/k6-action@v0.5.0
+      - name: Install Grafana k6 Binary Environment
+        uses: grafana/setup-k6-action@v1
         with:
-          # Automatically runs smoke test on PRs, or honors manual UI selection
-          filename: src/tests/${{ github.event.inputs.test_type || 'smoke' }}.test.js
+          version: latest
+
+      - name: Execute Selected k6 Performance Profile
+        uses: grafana/run-k6-action@v1
+        with:
+          path: src/tests/${{ github.event.inputs.test_type || 'smoke' }}.test.js
           flags: --no-summary --no-thresholds=false
         env:
           K6_ENV: ci
