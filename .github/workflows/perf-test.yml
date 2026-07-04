@@ -44,7 +44,7 @@ jobs:
         uses: grafana/run-k6-action@v1
         with:
           path: src/tests/${{ github.event.inputs.test_type || 'smoke' }}.test.js
-          flags: --no-summary --no-thresholds=false
+          flags: --no-thresholds=false
         env:
           K6_ENV: ci
           BASE_URL: https://herokuapp.com
