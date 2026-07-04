@@ -1,0 +1,10 @@
+{
+  "name": "reqres-k6-api-perf-framework",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Enterprise-grade API performance test framework for ReqRes using k6 and vanilla ES6 JavaScript.",
+  "scripts": {
+    "perf": "k6 run src/tests/reqres_api_perf_test.js",
+    "perf:summary": "k6 run --summary-export=summary.json src/tests/reqres_api_perf_test.js"
+  }
+}

@@ -1,0 +1,47 @@
+name: K6 Performance Testing Quality Gate
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  # Enables manual execution of specific test profiles from the GitHub UI
+  workflow_dispatch:
+    inputs:
+      test_type:
+        description: 'Select Performance Test Profile'
+        required: true
+        default: 'smoke'
+        type: choice
+        options:
+          - smoke
+          - load
+
+permissions:
+  contents: read
+
+jobs:
+  performance-regression-gate:
+    name: Execute Automated Performance Gate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository Codebase
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Execute Selected k6 Performance Profile
+        uses: grafana/k6-action@v0.5.0
+        with:
+          # Automatically runs smoke test on PRs, or honors manual UI selection
+          filename: src/tests/${{ github.event.inputs.test_type || 'smoke' }}.test.js
+          flags: --no-summary --no-thresholds=false
+        env:
+          K6_ENV: ci
+          BASE_URL: https://herokuapp.com
