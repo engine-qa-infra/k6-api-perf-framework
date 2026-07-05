@@ -1,11 +1,14 @@
-# Node files
+# Node Environment Files
 node_modules/
 package-lock.json
 npm-debug.log*
 
-# k6 output
+# k6 Engine Metrics Outputs
 summary.json
 
-# OS
+# Local HTML Performance Reports Telemetry
+reports/
+
+# Operating System Trash Files
 .DS_Store
 Thumbs.db

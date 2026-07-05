@@ -2,6 +2,7 @@ import { sleep } from 'k6';
 import { options as masterOptions } from '../config/config.js';
 import { authenticate, createBooking, updateBooking } from '../helpers/bookingClient.js';
 import { getAuthPayload, generateBookingPayload } from '../data/payloads.js'; // FIXED: Importing our decoupled data model
+import { generateReports } from '../utils/reporter.js';
 
 export const options = masterOptions; // FIXED: Using direct master options profile from config
 
@@ -34,4 +35,7 @@ export default function () {
   );
 
   sleep(1);
+}
+export function handleSummary(data) {
+  return generateReports(data);
 }

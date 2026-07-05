@@ -3,6 +3,7 @@ import { sleep } from 'k6';
 import { options as masterOptions } from '../config/config.js'; // Import master options
 import { thresholds } from '../utils/thresholds.js';
 import { buildFullUrl } from '../helpers/urlHelper.js';
+import { generateReports } from '../utils/reporter.js';
 
 export const options = {
   vus: 1,
@@ -19,4 +20,7 @@ export default function () {
   console.log(`GET /booking response body: ${response.body}`);
 
   sleep(1);
+}
+export function handleSummary(data) {
+  return generateReports(data);
 }

@@ -1,9 +1,11 @@
 import { Trend } from 'k6/metrics';
 import { thresholds } from '../utils/thresholds.js';
+import { envConfig } from './env.js';
 
-export const BASE_URL = __ENV.BASE_URL || 'https://restful-booker.herokuapp.com';
+export const BASE_URL = envConfig.baseUrl;
 export const config = {
   baseUrl: BASE_URL,
+  env: envConfig.name,
 };
 
 export const DEFAULT_HEADERS = {
